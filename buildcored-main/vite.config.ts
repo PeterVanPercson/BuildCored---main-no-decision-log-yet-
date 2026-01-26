@@ -1,6 +1,8 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
+import { apiPlugin } from "./server/api";
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
@@ -10,7 +12,7 @@ export default defineConfig(({ mode }) => ({
       "halley-peritectic-unpreclusively.ngrok-free.dev"
     ]
   },
-  plugins: [react()].filter(Boolean),
+  plugins: [react(), apiPlugin()].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

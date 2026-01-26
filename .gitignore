@@ -13,3 +13,4 @@ package-lock.json
 .cache/
 /.turbo/
 .env.local
+.vercel

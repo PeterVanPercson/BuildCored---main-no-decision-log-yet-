@@ -1,10 +1,17 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import type { Plugin, ViteDevServer } from 'vite';
 
-const supabaseAdmin = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+let supabaseAdmin: SupabaseClient | null = null;
+
+function getSupabaseClient(): SupabaseClient {
+  if (!supabaseAdmin) {
+    supabaseAdmin = createClient(
+      process.env.SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+  }
+  return supabaseAdmin;
+}
 
 export function apiPlugin(): Plugin {
   return {
@@ -35,7 +42,7 @@ export function apiPlugin(): Plugin {
               return;
             }
 
-            const { data: result, error } = await supabaseAdmin
+            const { data: result, error } = await getSupabaseClient()
               .from('decision_logs')
               .insert({
                 decision,

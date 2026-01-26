@@ -4,7 +4,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
-import Problem1 from "./pages/Problem1";
+import Engineers from "./pages/Engineers";
+import Companies from "./pages/Companies";
+import CompanyView from "./pages/CompanyView";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -17,8 +19,11 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/problem/1" element={<Problem1 />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/engineers" element={<Engineers />} />
+          <Route path="/companies" element={<Companies />} />
+          {/* Using :token dynamic segment for company view */}
+          <Route path="/company/:token" element={<CompanyView />} />
+          <Route path="/problem/1" element={<Engineers />} /> {/* Redirect/Alias for now */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -139,6 +139,136 @@ export function apiPlugin(): Plugin {
           }
         });
       });
+
+      // Register Company (Mock for local dev)
+      server.middlewares.use('/api/register-company', async (req, res, next) => {
+        if (req.method !== 'POST') return next();
+
+        let body = '';
+        req.on('data', chunk => body += chunk.toString());
+        req.on('end', async () => {
+          try {
+            const { email, company_name } = JSON.parse(body);
+            if (!email || !company_name) {
+              res.statusCode = 400;
+              res.end(JSON.stringify({ error: 'Email and Company Name are required' }));
+              return;
+            }
+
+            const { data, error } = await getSupabaseClient()
+              .from('company_tokens')
+              .insert({ email, company_name })
+              .select('token')
+              .single();
+
+            if (error) throw error;
+
+            res.end(JSON.stringify({ token: data.token }));
+          } catch (e) {
+            console.error(e);
+            res.statusCode = 500;
+            res.end(JSON.stringify({ error: 'Server error' }));
+          }
+        });
+      });
+
+      // Company View (Mock for local dev)
+      server.middlewares.use('/api/company-view', async (req, res, next) => {
+        if (req.method !== 'POST') return next();
+
+        let body = '';
+        req.on('data', chunk => body += chunk.toString());
+        req.on('end', async () => {
+          try {
+            const { token } = JSON.parse(body);
+            if (!token) {
+              res.statusCode = 401;
+              res.end(JSON.stringify({ error: 'Token required' }));
+              return;
+            }
+
+            const { data: company, error: tokenError } = await getSupabaseClient()
+              .from('company_tokens')
+              .select('id, company_name')
+              .eq('token', token)
+              .single();
+
+            if (tokenError || !company) {
+              res.statusCode = 403;
+              res.end(JSON.stringify({ error: 'Invalid token' }));
+              return;
+            }
+
+            const { data: submissions, error: subError } = await getSupabaseClient()
+              .from('decision_logs')
+              .select('*')
+              .order('created_at', { ascending: false });
+
+            if (subError) throw subError;
+
+            res.end(JSON.stringify({ company: company.company_name, submissions }));
+          } catch (e) {
+            console.error(e);
+            res.statusCode = 500;
+            res.end(JSON.stringify({ error: 'Server error' }));
+          }
+        });
+      });
+
+      // Request Interview (Mock for local dev)
+      server.middlewares.use('/api/request-interview', async (req, res, next) => {
+        if (req.method !== 'POST') return next();
+
+        let body = '';
+        req.on('data', chunk => body += chunk.toString());
+        req.on('end', async () => {
+          try {
+            const { token, handle } = JSON.parse(body);
+            if (!token || !handle) {
+              res.statusCode = 400;
+              res.end(JSON.stringify({ error: 'Missing fields' }));
+              return;
+            }
+
+            const { data: company, error: tokenError } = await getSupabaseClient()
+              .from('company_tokens')
+              .select('*')
+              .eq('token', token)
+              .single();
+
+            if (tokenError || !company) {
+              res.statusCode = 403;
+              res.end(JSON.stringify({ error: 'Invalid token' }));
+              return;
+            }
+
+            await getSupabaseClient().from('interview_requests').insert({
+              company_token: token,
+              engineer_handle: handle
+            });
+
+            // Send email (using Resend)
+            if (process.env.ADMIN_EMAIL && process.env.RESEND_API_KEY) {
+              const { Resend } = await import('resend');
+              const resend = new Resend(process.env.RESEND_API_KEY);
+
+              await resend.emails.send({
+                from: process.env.EMAIL_FROM || 'onboarding@resend.dev',
+                to: process.env.ADMIN_EMAIL,
+                subject: `INTERVIEW REQUEST: ${company.company_name} wants ${handle}`,
+                html: `<p>${company.company_name} (${company.email}) wants to interview ${handle}</p>`
+              });
+            }
+
+            res.end(JSON.stringify({ success: true }));
+          } catch (e) {
+            console.error(e);
+            res.statusCode = 500;
+            res.end(JSON.stringify({ error: 'Server error' }));
+          }
+        });
+      });
     },
   };
 }
+

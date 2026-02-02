@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import Logo from "@/components/Logo";
 import ScrollArrow from "@/components/ScrollArrow";
 import backgroundPattern from "@/assets/background-pattern.svg";
 
@@ -14,11 +13,6 @@ const Index = () => {
     <main className="h-screen overflow-y-auto snap-y snap-mandatory relative">
       {/* Hero Section */}
       <section className="h-screen snap-start flex flex-col relative shrink-0">
-        {/* Logo - Top Left */}
-        <div className="absolute md:-top-4 md:-left-8 -left-4 -top-4">
-          <Logo className="h-64" />
-        </div>
-
         {/* Center Text */}
         <div className="flex-1 flex items-center justify-center px-6">
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-light text-center max-w-4xl leading-tight tracking-tight">
@@ -50,13 +44,8 @@ const Index = () => {
             filter: "blur(3px)",
           }}
         />
-        {/* Logo - Top Center */}
-        <div className="pt-2 md:pt-4 flex justify-center">
-          <img src="/logo-text.svg" alt="BUILDCORED" className="h-40 w-auto" />
-        </div>
-
         {/* Center Paragraph */}
-        <div className="flex-1 flex items-center flex-col lg:space-y-8 space-y-6 justify-center px-6 md:px-12 mt-[-100px]">
+        <div className="flex-1 flex items-center flex-col lg:space-y-8 space-y-6 justify-center px-6 md:px-12">
           <p className="text-lg md:text-3xl lg:text-5xl lg:leading-[120%] text-foreground text-center max-w-3xl lg:max-w-4xl leading-relaxed font-light">
             An open-source platform for sharing creative engineering solutions
             across disciplines (code algorithms, 3D designs, AI models, MATLAB

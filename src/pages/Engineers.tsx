@@ -6,7 +6,7 @@ export default function Engineers() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-background pt-20">
+      <main className="min-h-screen bg-background pt-20 overflow-y-auto">
         <div className="max-w-5xl mx-auto px-6 py-12">
           {/* Hero */}
           <header className="mb-16 text-center">
@@ -123,7 +123,7 @@ export default function Engineers() {
           </section>
 
           {/* CTA */}
-          <section className="bg-card border border-border rounded-lg p-8 md:p-12 text-center">
+          <section className="bg-card border border-border rounded-lg p-8 md:p-12 text-center mb-12">
             <h2 className="text-2xl font-bold text-foreground mb-4">
               Ready to show what you can do?
             </h2>

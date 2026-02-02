@@ -20,7 +20,7 @@ export default function Problems() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-background pt-20">
+      <main className="min-h-screen bg-background pt-20 overflow-y-auto">
         <div className="max-w-5xl mx-auto px-6 py-12">
           {/* Header */}
           <header className="mb-12 text-center">

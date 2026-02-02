@@ -28,98 +28,102 @@ export default function Navbar() {
   const [problemsOpen, setProblemsOpen] = useState(false);
   const location = useLocation();
 
+  // Don't show navbar on home page - it has its own layout
+  if (location.pathname === "/") {
+    return null;
+  }
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center">
-            <span className="text-xl font-bold text-foreground tracking-tight">
-              BUILDCORED
-            </span>
-          </Link>
+    <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-auto max-w-[90vw]">
+      {/* Glassy container */}
+      <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2 py-2 backdrop-blur-md">
+        {/* Logo */}
+        <Link to="/" className="flex items-center px-3">
+          <span className="text-sm font-bold text-white tracking-tight">
+            BUILDCORED
+          </span>
+        </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
-            {NAV_ITEMS.map((item) => (
-              <div key={item.label} className="relative">
-                {item.hasDropdown ? (
-                  <div
-                    className="relative"
-                    onMouseEnter={() => setProblemsOpen(true)}
-                    onMouseLeave={() => setProblemsOpen(false)}
-                  >
-                    <button
-                      className={`flex items-center gap-1 px-4 py-2 text-sm font-medium rounded-full transition ${
-                        location.pathname.startsWith("/problem")
-                          ? "text-foreground"
-                          : "text-muted-foreground hover:text-foreground"
-                      }`}
-                    >
-                      {item.label}
-                      <ChevronDown className="h-4 w-4" />
-                    </button>
-
-                    {/* Dropdown */}
-                    {problemsOpen && (
-                      <div className="absolute top-full left-0 mt-1 w-72 bg-card border border-border rounded-lg shadow-xl py-2">
-                        <Link
-                          to="/problems"
-                          className="block px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary transition"
-                        >
-                          View All Problems
-                        </Link>
-                        <div className="border-t border-border my-2" />
-                        {PROBLEMS.map((problem) => (
-                          <Link
-                            key={problem.id}
-                            to={`/problem/${problem.id}`}
-                            className="block px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary transition"
-                          >
-                            <span className="text-primary font-mono">#{problem.id}</span>{" "}
-                            {problem.title}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <Link
-                    to={item.href}
-                    className={`px-4 py-2 text-sm font-medium rounded-full transition ${
-                      location.pathname === item.href
-                        ? "text-foreground"
-                        : "text-muted-foreground hover:text-foreground"
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center">
+          {NAV_ITEMS.map((item) => (
+            <div key={item.label} className="relative">
+              {item.hasDropdown ? (
+                <div
+                  className="relative"
+                  onMouseEnter={() => setProblemsOpen(true)}
+                  onMouseLeave={() => setProblemsOpen(false)}
+                >
+                  <button
+                    className={`flex items-center gap-1 px-3 py-1.5 text-sm font-medium transition ${
+                      location.pathname.startsWith("/problem")
+                        ? "text-white"
+                        : "text-white/60 hover:text-white"
                     }`}
                   >
                     {item.label}
-                  </Link>
-                )}
-              </div>
-            ))}
+                    <ChevronDown className="h-3 w-3" />
+                  </button>
 
-            {/* Apply Button */}
-            <Link
-              to="/problems"
-              className="ml-4 rounded-full px-5 py-2 text-sm font-medium text-black bg-white hover:bg-white/90 transition"
-            >
-              Apply
-            </Link>
-          </div>
+                  {/* Dropdown */}
+                  {problemsOpen && (
+                    <div className="absolute top-full left-0 mt-2 w-72 rounded-lg border border-white/10 bg-black/90 backdrop-blur-md shadow-xl py-2">
+                      <Link
+                        to="/problems"
+                        className="block px-4 py-2 text-sm text-white/60 hover:text-white hover:bg-white/5 transition"
+                      >
+                        View All Problems
+                      </Link>
+                      <div className="border-t border-white/10 my-2" />
+                      {PROBLEMS.map((problem) => (
+                        <Link
+                          key={problem.id}
+                          to={`/problem/${problem.id}`}
+                          className="block px-4 py-2 text-sm text-white/60 hover:text-white hover:bg-white/5 transition"
+                        >
+                          <span className="text-primary font-mono">#{problem.id}</span>{" "}
+                          {problem.title}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  to={item.href}
+                  className={`px-3 py-1.5 text-sm font-medium transition ${
+                    location.pathname === item.href
+                      ? "text-white"
+                      : "text-white/60 hover:text-white"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              )}
+            </div>
+          ))}
 
-          {/* Mobile menu button */}
-          <button
-            className="md:hidden p-2 text-foreground"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          {/* Apply Button */}
+          <Link
+            to="/problems"
+            className="ml-2 rounded-full px-4 py-1.5 text-sm font-medium text-black bg-white hover:bg-white/90 transition"
           >
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+            Apply
+          </Link>
         </div>
+
+        {/* Mobile menu button */}
+        <button
+          className="md:hidden p-2 text-white"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
+          {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
       </div>
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-card border-t border-border">
+        <div className="md:hidden mt-2 rounded-lg border border-white/10 bg-black/90 backdrop-blur-md">
           <div className="px-4 py-4 space-y-2">
             {NAV_ITEMS.map((item) => (
               <div key={item.label}>
@@ -127,7 +131,7 @@ export default function Navbar() {
                   <>
                     <button
                       onClick={() => setProblemsOpen(!problemsOpen)}
-                      className="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-foreground"
+                      className="flex items-center justify-between w-full px-3 py-2 text-sm font-medium text-white"
                     >
                       {item.label}
                       <ChevronDown
@@ -141,7 +145,7 @@ export default function Navbar() {
                         <Link
                           to="/problems"
                           onClick={() => setMobileMenuOpen(false)}
-                          className="block px-4 py-2 text-sm text-muted-foreground"
+                          className="block px-3 py-2 text-sm text-white/60"
                         >
                           View All Problems
                         </Link>
@@ -150,7 +154,7 @@ export default function Navbar() {
                             key={problem.id}
                             to={`/problem/${problem.id}`}
                             onClick={() => setMobileMenuOpen(false)}
-                            className="block px-4 py-2 text-sm text-muted-foreground"
+                            className="block px-3 py-2 text-sm text-white/60"
                           >
                             #{problem.id} {problem.short}
                           </Link>
@@ -162,7 +166,7 @@ export default function Navbar() {
                   <Link
                     to={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block px-4 py-2 text-sm font-medium text-foreground"
+                    className="block px-3 py-2 text-sm font-medium text-white"
                   >
                     {item.label}
                   </Link>
@@ -172,7 +176,7 @@ export default function Navbar() {
             <Link
               to="/problems"
               onClick={() => setMobileMenuOpen(false)}
-              className="block mx-4 mt-4 text-center rounded-full px-5 py-2 text-sm font-medium text-black bg-white"
+              className="block mx-3 mt-4 text-center rounded-full px-4 py-2 text-sm font-medium text-black bg-white"
             >
               Apply
             </Link>

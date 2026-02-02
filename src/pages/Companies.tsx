@@ -18,7 +18,7 @@ export default function Companies() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-background pt-20">
+      <main className="min-h-screen bg-background pt-20 overflow-y-auto">
         <div className="max-w-5xl mx-auto px-6 py-12">
           {/* Hero */}
           <header className="mb-16 text-center">

@@ -1,5 +1,4 @@
 import { Github, Linkedin, Twitter } from "lucide-react";
-import Navbar from "@/components/Navbar";
 
 const TEAM = [
   {
@@ -18,9 +17,7 @@ const TEAM = [
 
 export default function Team() {
   return (
-    <>
-      <Navbar />
-      <main className="min-h-screen bg-background pt-20">
+    <main className="min-h-screen bg-background pt-20">
         <div className="max-w-4xl mx-auto px-6 py-12">
           {/* Header */}
           <header className="mb-16 text-center">
@@ -110,6 +107,5 @@ export default function Team() {
           </section>
         </div>
       </main>
-    </>
   );
 }

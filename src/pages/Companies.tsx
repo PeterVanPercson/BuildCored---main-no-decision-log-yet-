@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Navbar from "@/components/Navbar";
 
 export default function Companies() {
   const [email, setEmail] = useState("");
@@ -39,9 +38,7 @@ export default function Companies() {
   };
 
   return (
-    <>
-      <Navbar />
-      <main className="min-h-screen bg-background flex flex-col pt-20 overflow-y-auto">
+    <main className="min-h-screen bg-background flex flex-col pt-20 overflow-y-auto">
         <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
           <div className="max-w-2xl w-full space-y-8">
             <div className="text-center space-y-4">
@@ -194,6 +191,5 @@ export default function Companies() {
           </div>
         </div>
       </main>
-    </>
   );
 }

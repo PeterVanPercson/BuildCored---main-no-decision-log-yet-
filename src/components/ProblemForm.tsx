@@ -10,7 +10,6 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Problem } from "@/lib/problems";
-import Navbar from "@/components/Navbar";
 
 interface FormData {
   email: string;
@@ -102,9 +101,7 @@ export default function ProblemForm({ problem }: ProblemFormProps) {
 
   if (submitted) {
     return (
-      <>
-        <Navbar />
-        <main className="min-h-screen bg-background flex items-center justify-center p-6 pt-20">
+      <main className="min-h-screen bg-background flex items-center justify-center p-6 pt-20">
           <div className="max-w-xl text-center space-y-6">
             <h1 className="text-3xl font-semibold text-foreground">
               Submitted as{" "}
@@ -123,14 +120,11 @@ export default function ProblemForm({ problem }: ProblemFormProps) {
             </Button>
           </div>
         </main>
-      </>
     );
   }
 
   return (
-    <>
-      <Navbar />
-      <main className="min-h-screen bg-background overflow-y-auto pt-20">
+    <main className="min-h-screen bg-background overflow-y-auto pt-20">
         <div className="max-w-3xl mx-auto px-6 py-12">
           {/* Header */}
           <header className="mb-10">
@@ -321,6 +315,5 @@ export default function ProblemForm({ problem }: ProblemFormProps) {
           </form>
         </div>
       </main>
-    </>
   );
 }

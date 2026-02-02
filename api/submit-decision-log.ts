@@ -14,22 +14,9 @@ function generateHandle(email: string): string {
   return `${adj} ${animal} #${num.toString().padStart(4, '0')}`;
 }
 
-const PROMPT_TEXT = `You inherit a payment processing system handling $2M/day. For the past week, latency spikes to 3+ seconds during peak hours (2–4pm), causing 2–3% of transactions to timeout.
-
-You have:
-• 2 weeks
-• One junior engineer (started 3 months ago)
-• No budget for new infrastructure
-• Access to logs, metrics, and the codebase
-
-The situation:
-• CEO wants a fix before a board meeting in 10 days
-• CTO wants root cause understood before any fix ships
-• The on-call engineer who knew the system best quit last month`;
-
 const LIMITS: Record<string, number> = {
-  first_action: 280, why_first: 280, second_action: 280, why_second: 280,
-  third_action: 280, signals_data_first: 280, wont_do: 450, biggest_risk: 350,
+  first_action: 350, why_first: 280, second_action: 350, why_second: 280,
+  third_action: 350, signals_data_first: 280, wont_do: 450, biggest_risk: 350,
   verify_and_rollback: 350, with_more_time: 280
 };
 
@@ -41,7 +28,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const body = req.body;
 
-    const required = ['email', 'first_action', 'why_first', 'second_action', 'why_second',
+    const required = ['email', 'problem_id', 'first_action', 'why_first', 'second_action', 'why_second',
       'third_action', 'signals_data_first', 'wont_do', 'biggest_risk', 'verify_and_rollback',
       'with_more_time', 'attest_original'];
 
@@ -75,8 +62,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       role_track: body.role_track || null,
       seniority: body.seniority || null,
       time_budget: body.time_budget || null,
-      prompt_id: 'problem-1',
-      prompt_text: PROMPT_TEXT,
+      problem_id: body.problem_id,
+      problem_title: body.problem_title || null,
       first_action: body.first_action,
       why_first: body.why_first,
       second_action: body.second_action,

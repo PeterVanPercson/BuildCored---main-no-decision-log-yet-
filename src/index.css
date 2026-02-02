@@ -61,7 +61,6 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Space Grotesk', sans-serif;
-    overflow: hidden;
   }
 
   .font-mono {

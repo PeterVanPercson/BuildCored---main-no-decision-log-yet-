@@ -38,7 +38,7 @@ export default function Navbar() {
           to="/"
           className="flex items-center pr-4 border-r border-white/10"
         >
-          <Logo className="h-9 w-auto" src="/logo.svg" alt="Buildcored logo" />
+          <Logo className="h-14 w-auto" src="/logo.svg" alt="Buildcored logo" />
         </Link>
 
         {/* Desktop Navigation */}

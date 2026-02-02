@@ -51,9 +51,6 @@ const Index = () => {
             across disciplines (code algorithms, 3D designs, AI models, MATLAB
             scripts, CAD drawings, robotics projects, and so on).
           </p>
-          <h3 className="uppercase font-bold tracking-wide text-md md:text-xl lg:text-3xl">
-            Coming Soon...
-          </h3>
         </div>
 
         <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-full px-4">

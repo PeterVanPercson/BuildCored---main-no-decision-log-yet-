@@ -28,11 +28,6 @@ export default function Navbar() {
   const [problemsOpen, setProblemsOpen] = useState(false);
   const location = useLocation();
 
-  // Don't show navbar on home page - it has its own layout
-  if (location.pathname === "/") {
-    return null;
-  }
-
   return (
     <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-auto max-w-[90vw]">
       {/* Glassy container */}

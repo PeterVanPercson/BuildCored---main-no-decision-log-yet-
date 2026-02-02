@@ -12,6 +12,7 @@ import Problem from "./pages/Problem";
 import About from "./pages/About";
 import Team from "./pages/Team";
 import NotFound from "./pages/NotFound";
+import Navbar from "./components/Navbar";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/engineers" element={<Engineers />} />

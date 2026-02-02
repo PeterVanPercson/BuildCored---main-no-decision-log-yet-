@@ -35,15 +35,8 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-auto max-w-[90vw]">
-      {/* Glassy container */}
+      {/* Glassy container - nav items only, no duplicate branding */}
       <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2 py-2 backdrop-blur-md">
-        {/* Logo */}
-        <Link to="/" className="flex items-center px-3">
-          <span className="text-sm font-bold text-white tracking-tight">
-            BUILDCORED
-          </span>
-        </Link>
-
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center">
           {NAV_ITEMS.map((item) => (
